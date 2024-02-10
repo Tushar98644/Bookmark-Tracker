@@ -23,12 +23,36 @@ echo "First things first, let's identify all the browsers you have installed."
 sleep 1
 
 check_browser() {
-    if [ -d "$1" ]; then
+    if [ -d "$1" ]
+    then
         echo "$2 is installed"        
     fi
 }
 
-chrome_directory="$HOME/Library/Application Support/Google/Chrome/Default"
+case "$OS" in
+  "Mac OS")
+    chrome_directory="$HOME/Library/Application Support/Google/Chrome/Default"
+    brave_directory="$HOME/Library/Application Support/BraveSoftware/Brave-Browser/Default"
+    firefox_directory="$HOME/Library/Application Support/Firefox/Profiles"
+    ;;
+  "LINUX")
+    chrome_directory="$HOME/.config/google-chrome/Default"
+    brave_directory="$HOME/.config/BraveBrowser"
+    firefox_directory="$HOME/.mozilla/firefox/"
+    ;;
+  "WINDOWS" | "ALSO WINDOWS")
+    chrome_directory=""
+    brave_directory=""
+    firefox_directory=""
+    edge_directory=""
+    ;;
+  *)
+    echo "Unsupported operating system: $OS"
+    exit 1
+    ;;
+esac
+
 check_browser "$chrome_directory" "Google Chrome"
-check_browser "/Applications/Firefox.app" "Firefox"
-check_browser "/Applications/Microsoft Edge.app" "Microsoft Edge"
+check_browser "$brave_directory" "Brave"
+check_browser "$firefox_directory" "Firefox"
+check_browser "$edge_directory" "Edge"
