@@ -25,7 +25,8 @@ sleep 1
 check_browser() {
     if [ -d "$1" ]
     then
-        echo "$2 is installed"        
+        echo "$2 is installed"
+        installed_browsers+=("$2")  
     fi
 }
 
@@ -37,8 +38,8 @@ case "$OS" in
     ;;
   "LINUX")
     chrome_directory="$HOME/.config/google-chrome/Default"
-    brave_directory="$HOME/.config/BraveBrowser"
-    firefox_directory="$HOME/.mozilla/firefox/"
+    brave_directory="$HOME/.config/BraveSoftware/Brave-Browser/Default"
+    firefox_directory="$HOME/.mozilla/firefox"
     ;;
   "WINDOWS" | "ALSO WINDOWS")
     chrome_directory=""
@@ -56,3 +57,47 @@ check_browser "$chrome_directory" "Google Chrome"
 check_browser "$brave_directory" "Brave"
 check_browser "$firefox_directory" "Firefox"
 check_browser "$edge_directory" "Edge"
+
+sleep 2 
+
+echo "I have identified the browsers you have installed. Now, let's move on to the next step."
+
+sleep 1
+
+echo "I will look for the bookmarks in each of the browsers."
+
+sleep 1
+
+fetch_bookmarks() {
+  case "$1" in
+    "Google Chrome")
+      chrome_bookmarks=$(cat "$chrome_directory/Bookmarks")
+      ;;
+    "Brave")
+      brave_bookmarks=$(cat "$brave_directory/Bookmarks")
+      ;;
+    "Firefox")
+      firefox_bookmarks=$(cat "$firefox_directory/places.sqlite")
+      ;;
+    "Edge")
+      edge_bookmarks=$(cat "$edge_directory/Bookmarks")
+      ;;
+    *)
+      echo "Unsupported browser: $1"
+      exit 1
+      ;;
+  esac
+}
+
+echo "I will start with $installed_browsers"
+
+for browser in "${installed_browsers[@]}"
+do
+  echo "Fetching all bookmarks for $browser" 
+  fetch_bookmarks "$browser"
+  echo "All bookmarks for $browser have been fetched successfully. Moving on to the next browser."
+done
+
+echo "All bookmarks for all the browsers have been fetched successfully."
+
+sleep 2
