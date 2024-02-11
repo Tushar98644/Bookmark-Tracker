@@ -109,18 +109,60 @@ sleep 2
 generate_output() {
 echo "---"
 echo "title: $1" 
-echo "date: $(date +"%Y-%m-%d")" # Use the current date as the "date" field in the front matter
+echo "date: $(date +"%Y-%m-%d")" 
 echo "description: Post description here."
 echo "---"
 echo
 echo
 echo 
+if [ "$chrome_bookmarks" ]; then
+  if [ -z "$chrome_bookmarks" ]; then
+    echo "No bookmarks found"
+  else
+    echo "<h2>Chrome Bookmarks</h2>"
+    echo "$chrome_bookmarks"
+  fi
+else
+  echo "No bookmarks found"
+fi
 echo
-echo "<h2>Chrome Bookmarks</h2>"
-echo "$chrome_bookmarks"
 echo
-echo "<h2>Brave Bookmarks</h2>"
-echo "$brave_bookmarks"
+if [ "$brave_bookmarks" ]; then
+  if [ -z "$brave_bookmarks" ]; then
+    echo "No bookmarks found"
+  else
+    echo "<h2>Brave Bookmarks</h2>"
+    echo "$brave_bookmarks"
+  fi
+else
+  echo "No bookmarks found"
+fi
+echo
+echo
+if [ "$firefox_bookmarks" ]; then
+  if [ -z "$firefox_bookmarks" ]; then
+    echo "No bookmarks found"
+  else
+    echo "<h2>Firefox Bookmarks</h2>"
+    echo "$firefox_bookmarks"
+  fi
+else
+  echo "No bookmarks found"
+fi
+echo
+echo
+if [ "$edge_bookmarks" ]; then
+  if [ -z "$edge_bookmarks" ]; then
+    echo "No bookmarks found"
+  else
+    echo "<h2>Edge Bookmarks</h2>"
+    echo "$edge_bookmarks"
+  fi
+else
+  echo "No bookmarks found"
+fi
+echo
+echo
 echo "<ul>
 <li><a href=\"#\" target=\"_blank\" rel=\"noopener\">Bookmark</a></li>
 <li><a href=\"#\" target=\"_blank\" rel=\"noopener\">Bookmark</a></li>
