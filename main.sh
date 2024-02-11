@@ -101,3 +101,31 @@ done
 echo "All bookmarks for all the browsers have been fetched successfully."
 
 sleep 2
+
+echo "Now let's store all the bookmarks in a markdown file."
+
+sleep 2
+
+generate_output() {
+echo "---"
+echo "title: $1" 
+echo "date: $(date +"%Y-%m-%d")" # Use the current date as the "date" field in the front matter
+echo "description: Post description here."
+echo "---"
+echo
+echo
+echo 
+echo
+echo "<h2>Chrome Bookmarks</h2>"
+echo "$chrome_bookmarks"
+echo
+echo "<h2>Brave Bookmarks</h2>"
+echo "$brave_bookmarks"
+echo "<ul>
+<li><a href=\"#\" target=\"_blank\" rel=\"noopener\">Bookmark</a></li>
+<li><a href=\"#\" target=\"_blank\" rel=\"noopener\">Bookmark</a></li>
+</ul>"
+}
+
+markdown_file="bookmarks.md"
+generate_output > "$markdown_file"
