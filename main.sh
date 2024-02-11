@@ -120,10 +120,16 @@ if [ "$chrome_bookmarks" ]; then
     echo "No bookmarks found"
   else
     echo "<h2>Chrome Bookmarks</h2>"
-    echo "$chrome_bookmarks"
+    for i in $(echo "$chrome_bookmarks" | jq -r '.roots | keys[]'); do
+      echo "<ul>"
+      for j in $(echo "$chrome_bookmarks" | jq -r ".roots.$i.children | keys[]"); do
+        echo "<li>
+           <a href=\"$(echo "$chrome_bookmarks" | jq -r ".roots.$i.children[$j].url")\" target=\"_blank\" rel=\"noopener\">$(echo "$chrome_bookmarks" | jq -r ".roots.$i.children[$j].name")</a>
+        </li>"
+      done
+      echo "</ul>"
+    done
   fi
-else
-  echo "No bookmarks found"
 fi
 echo
 echo
@@ -132,10 +138,16 @@ if [ "$brave_bookmarks" ]; then
     echo "No bookmarks found"
   else
     echo "<h2>Brave Bookmarks</h2>"
-    echo "$brave_bookmarks"
+    for i in $(echo "$brave_bookmarks" | jq -r '.roots | keys[]'); do
+      echo "<ul>"
+      for j in $(echo "$brave_bookmarks" | jq -r ".roots.$i.children | keys[]"); do
+        echo "<li>
+           <a href=\"$(echo "$brave_bookmarks" | jq -r ".roots.$i.children[$j].url")\" target=\"_blank\" rel=\"noopener\">$(echo "$brave_bookmarks" | jq -r ".roots.$i.children[$j].name")</a>
+        </li>"
+      done
+      echo "</ul>"
+    done
   fi
-else
-  echo "No bookmarks found"
 fi
 echo
 echo
@@ -144,10 +156,16 @@ if [ "$firefox_bookmarks" ]; then
     echo "No bookmarks found"
   else
     echo "<h2>Firefox Bookmarks</h2>"
-    echo "$firefox_bookmarks"
+    for i in $(echo "$firefox_bookmarks" | jq -r '.roots | keys[]'); do
+      echo "<ul>"
+      for j in $(echo "$firefox_bookmarks" | jq -r ".roots.$i.children | keys[]"); do
+        echo "<li>
+           <a href=\"$(echo "$firefox_bookmarks" | jq -r ".roots.$i.children[$j].url")\" target=\"_blank\" rel=\"noopener\">$(echo "$firefox_bookmarks" | jq -r ".roots.$i.children[$j].name")</a>
+        </li>"
+      done
+      echo "</ul>"
+    done
   fi
-else
-  echo "No bookmarks found"
 fi
 echo
 echo
@@ -156,17 +174,17 @@ if [ "$edge_bookmarks" ]; then
     echo "No bookmarks found"
   else
     echo "<h2>Edge Bookmarks</h2>"
-    echo "$edge_bookmarks"
+    for i in $(echo "$edge_bookmarks" | jq -r '.roots | keys[]'); do
+      echo "<ul>"
+      for j in $(echo "$edge_bookmarks" | jq -r ".roots.$i.children | keys[]"); do
+        echo "<li>
+           <a href=\"$(echo "$edge_bookmarks" | jq -r ".roots.$i.children[$j].url")\" target=\"_blank\" rel=\"noopener\">$(echo "$edge_bookmarks" | jq -r ".roots.$i.children[$j].name")</a>
+        </li>"
+      done
+      echo "</ul>"
+    done
   fi
-else
-  echo "No bookmarks found"
 fi
-echo
-echo
-echo "<ul>
-<li><a href=\"#\" target=\"_blank\" rel=\"noopener\">Bookmark</a></li>
-<li><a href=\"#\" target=\"_blank\" rel=\"noopener\">Bookmark</a></li>
-</ul>"
 }
 
 markdown_file="bookmarks.md"
